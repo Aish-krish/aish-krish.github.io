@@ -1,0 +1,464 @@
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --p:#4A1FB8;--pm:#7C3AED;--pl:#EDE9FE;--ps:#F5F3FF;
+  --t:#0F766E;--tl:#CCFBF1;--tm:#14B8A6;
+  --g:#854D0E;--gl:#FEF9C3;--gm:#CA8A04;
+  --ink:#0F0A1E;--muted:#5B5470;--hint:#9CA3AF;
+  --bg:#FEFEFE;--soft:#F8F7FF;--border:#E5E1F8;
+  --nh:64px;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--pl);color:var(--p)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;height:var(--nh);background:rgba(254,254,254,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 6%}
+.nlogo{font-size:15px;font-weight:800;color:var(--p);letter-spacing:-0.5px}
+.nlogo em{color:var(--tm);font-style:normal}
+.nlinks{display:flex;gap:26px}
+.nlinks a{font-size:13px;color:var(--muted);font-weight:500;transition:color .15s}
+.nlinks a:hover{color:var(--p)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nh)+60px) 7% 60px;max-width:1000px;margin:0 auto}
+.hero-kicker{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tm);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-kicker::before{content:'';display:block;width:28px;height:2px;background:var(--tm);border-radius:2px}
+.hero h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:24px;color:var(--ink)}
+.hero h1 .scribble{color:var(--pm);position:relative;display:inline-block}
+.hero h1 .scribble::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;background:var(--tm);border-radius:2px;transform:rotate(-1deg)}
+.hero h1 .soft{color:var(--muted);font-weight:400}
+.hero-intro{font-size:1.1rem;color:var(--muted);max-width:600px;margin-bottom:16px;line-height:1.8}
+.hero-intro strong{color:var(--ink);font-weight:600}
+.hero-aside{font-size:13px;color:var(--hint);margin-bottom:36px;font-style:italic}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px}
+.cta-main{background:var(--p);color:#fff;padding:13px 28px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;letter-spacing:.2px}
+.cta-main:hover{background:var(--pm);transform:translateY(-2px)}
+.cta-ghost{background:transparent;color:var(--p);padding:13px 28px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid var(--border);transition:all .2s}
+.cta-ghost:hover{border-color:var(--pm);color:var(--pm)}
+.hero-proof{display:flex;gap:0;border:1px solid var(--border);border-radius:14px;overflow:hidden;width:fit-content}
+.proof-item{padding:16px 24px;text-align:center;border-right:1px solid var(--border)}
+.proof-item:last-child{border-right:none}
+.proof-num{font-size:1.6rem;font-weight:900;color:var(--p);line-height:1}
+.proof-lbl{font-size:10px;color:var(--hint);margin-top:3px;line-height:1.3;max-width:70px}
+
+/* SECTION WRAPPER */
+.sw{padding:80px 7%;max-width:1000px;margin:0 auto}
+.sw-full{padding:80px 7%}
+.sw-full-inner{max-width:1000px;margin:0 auto}
+.sticker{display:inline-flex;align-items:center;gap:6px;background:var(--pl);color:var(--p);font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px}
+.sh{font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:900;letter-spacing:-1px;margin-bottom:6px}
+.sp{color:var(--muted);font-size:14px;margin-bottom:36px;max-width:540px;line-height:1.7}
+
+/* STORY / ABOUT */
+.story-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
+.story-body p{color:var(--muted);font-size:14px;line-height:1.9;margin-bottom:16px}
+.story-body p strong{color:var(--ink);font-weight:600}
+.story-body .callout{background:var(--ps);border-left:3px solid var(--pm);border-radius:0 10px 10px 0;padding:14px 18px;font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;font-style:italic}
+.story-aside{display:flex;flex-direction:column;gap:14px}
+.aside-card{background:var(--soft);border:1px solid var(--border);border-radius:14px;padding:18px 20px}
+.aside-card .ac-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--hint);margin-bottom:10px}
+.aside-card .ac-stat{font-size:2rem;font-weight:900;color:var(--pm);line-height:1}
+.aside-card .ac-desc{font-size:12px;color:var(--muted);margin-top:3px}
+.aside-card.teal .ac-stat{color:var(--t)}
+.aside-card.gold .ac-stat{color:var(--g)}
+
+/* TIMELINE / EXP */
+.tl{position:relative;padding-left:36px}
+.tl::before{content:'';position:absolute;left:13px;top:16px;bottom:16px;width:1.5px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:42px}
+.tl-dot{position:absolute;left:-28px;top:7px;width:14px;height:14px;border-radius:50%;background:var(--pm);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--pm)}
+.tl-dot.t{background:var(--tm);box-shadow:0 0 0 2px var(--tm)}
+.tl-meta{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;margin-bottom:3px}
+.tl-co{font-weight:800;font-size:15px;letter-spacing:-.3px}
+.tl-when{font-size:11px;color:var(--hint);background:var(--soft);border:1px solid var(--border);padding:3px 12px;border-radius:20px;font-weight:500}
+.tl-role{font-size:12px;color:var(--tm);font-weight:700;margin-bottom:12px;letter-spacing:.2px}
+.tl-body{display:flex;flex-direction:column;gap:6px}
+.tl-line{font-size:13px;color:var(--muted);line-height:1.65;padding-left:14px;position:relative}
+.tl-line::before{content:'›';position:absolute;left:0;color:var(--pm);font-weight:700;font-size:14px;top:-1px}
+.tl-win{background:var(--pl);color:var(--p);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;margin-top:6px;display:inline-block}
+
+/* PROJECTS */
+.proj-intro{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.7;max-width:600px}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.pc{background:var(--soft);border:1px solid var(--border);border-radius:18px;padding:24px;transition:all .22s;position:relative;overflow:hidden}
+.pc:hover{border-color:var(--pm);transform:translateY(-3px);box-shadow:0 14px 40px rgba(124,58,237,.1)}
+.pc.hero-proj{border:2px solid var(--pm);background:#fff}
+.pc-glow{position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:var(--pl);opacity:.5}
+.pc-eyebrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.pc-type{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.pt-ai{background:var(--pl);color:var(--p)}
+.pt-be{background:var(--tl);color:var(--t)}
+.pt-da{background:var(--gl);color:var(--g)}
+.pc-badge{font-size:10px;font-weight:700;background:var(--p);color:#fff;padding:2px 8px;border-radius:20px}
+.pc-name{font-weight:800;font-size:14px;margin-bottom:8px;line-height:1.35;letter-spacing:-.2px}
+.pc-where{font-size:11px;color:var(--hint);margin-bottom:8px;font-style:italic}
+.pc-desc{font-size:12px;color:var(--muted);line-height:1.72;margin-bottom:14px}
+.pc-impact{font-size:12px;color:var(--p);font-weight:700;margin-bottom:12px}
+.pc-pills{display:flex;flex-wrap:wrap;gap:5px}
+.pp{font-size:10px;border:1px solid var(--border);border-radius:10px;padding:2px 9px;color:var(--hint);background:var(--bg)}
+
+/* SKILLS */
+.sk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.sk-card{background:var(--soft);border:1px solid var(--border);border-radius:14px;padding:20px}
+.sk-head{font-size:12px;font-weight:800;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px;letter-spacing:-.1px}
+.sk-ico{font-size:18px}
+.sk-tags{display:flex;flex-wrap:wrap;gap:6px}
+.st{font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:3px 10px;color:var(--muted)}
+
+/* PUB */
+.pub-card{border:1px solid var(--border);border-radius:16px;padding:26px;background:var(--soft);margin-bottom:14px;display:flex;gap:18px}
+.pub-num{font-size:2rem;font-weight:900;color:var(--border);line-height:1;flex-shrink:0;font-family:Georgia,serif}
+.pub-venue{font-size:11px;color:var(--tm);font-weight:700;margin-bottom:5px}
+.pub-title{font-weight:800;font-size:14px;margin-bottom:6px;letter-spacing:-.2px}
+.pub-body{font-size:12px;color:var(--muted);line-height:1.7}
+
+/* CERTS */
+.cert-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.cert{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.cdot{width:6px;height:6px;border-radius:50%;background:var(--pm);flex-shrink:0}
+
+/* ACTIVITIES */
+.act-wrap{background:var(--p);border-radius:20px;padding:32px;margin-top:40px}
+.act-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:6px}
+.act-sub{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:18px}
+.act-tags{display:flex;flex-wrap:wrap;gap:8px}
+.act-tag{background:rgba(255,255,255,.12);border-radius:20px;padding:6px 14px;font-size:12px;color:#fff;border:1px solid rgba(255,255,255,.2)}
+
+/* CONTACT */
+.contact-wrap{background:var(--ink);border-radius:24px;padding:64px 48px;text-align:center;position:relative;overflow:hidden}
+.cw-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(124,58,237,.3) 0%,transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(20,184,166,.2) 0%,transparent 60%)}
+.cw-inner{position:relative;z-index:1}
+.cw-kicker{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tm);margin-bottom:16px}
+.cw-h{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:900;color:#fff;margin-bottom:12px;letter-spacing:-1px;line-height:1.15}
+.cw-p{color:rgba(255,255,255,.6);font-size:14px;max-width:480px;margin:0 auto 32px;line-height:1.7}
+.cw-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.cl{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:10px;padding:11px 20px;font-size:13px;font-weight:500;transition:all .2s;cursor:pointer}
+.cl:hover{background:rgba(255,255,255,.16)}
+
+footer{text-align:center;padding:28px;font-size:12px;color:var(--hint);background:var(--bg);border-top:1px solid var(--border)}
+footer strong{color:var(--pm)}
+
+@media(max-width:680px){
+  .story-grid{grid-template-columns:1fr}
+  .hero-proof{flex-direction:column;width:100%}
+  .proof-item{border-right:none;border-bottom:1px solid var(--border)}
+  .proof-item:last-child{border-bottom:none}
+  .contact-wrap{padding:40px 24px}
+  nav{padding:0 4%}
+}
+</style>
+
+<nav>
+  <div class="nlogo">aish<em>.dev</em></div>
+  <div class="nlinks">
+    <a href="#about">about</a>
+    <a href="#work">work</a>
+    <a href="#projects">projects</a>
+    <a href="#skills">skills</a>
+    <a href="#contact">hire me</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-kicker">Available · Summer 2027</div>
+  <h1>
+    I make computers do<br>
+    <span class="scribble">clever things</span><br>
+    <span class="soft">at an embarrassing scale.</span>
+  </h1>
+  <p class="hero-intro">
+    Hey, I'm <strong>Aishwarya</strong> — backend engineer, agentic AI builder, and the person who
+    automated so much at Citi that I had to find new things to automate.
+    Currently: shipping microservices for millions of customers.
+    Next: <strong>UIUC MCS, Fall 2026.</strong>
+  </p>
+  <p class="hero-aside">(Yes, I also somehow find time to do research. Published in Springer. No big deal. Okay, a little big deal.)</p>
+  <div class="hero-ctas">
+    <button class="cta-main" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">See what I've shipped →</button>
+    <button class="cta-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Let's talk</button>
+  </div>
+  <div class="hero-proof">
+    <div class="proof-item"><div class="proof-num">70%</div><div class="proof-lbl">dev effort cut with AI I built</div></div>
+    <div class="proof-item"><div class="proof-num">5+</div><div class="proof-lbl">microservices live in production</div></div>
+    <div class="proof-item"><div class="proof-num">9.58</div><div class="proof-lbl">GPA · ranked 2nd of 140</div></div>
+    <div class="proof-item"><div class="proof-num">4</div><div class="proof-lbl">engineers I lead. at 23.</div></div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="sw-full" style="background:var(--soft)">
+<div class="sw-full-inner">
+  <div class="sticker">✦ the actual human</div>
+  <div class="sh">Not your average backend dev.</div>
+  <div class="story-grid">
+    <div class="story-body">
+      <p>I started writing code because I wanted to build things that matter. Somewhere along the way I ended up <strong>leading a team at Citi at 23</strong>, winning hackathons, and getting published in a Springer journal — all while finishing two degrees simultaneously.</p>
+      <p>My thing is the <strong>intersection of robust engineering and AI</strong>. Not the "slap an LLM on it" kind — I mean systems that actually think: intent classification, autonomous multi-step orchestration, agents that know when to hand off. I've shipped these to production. They work.</p>
+      <p>I believe the best engineers make their teams faster, not just their own output bigger. I've done both — <strong>35% efficiency improvement</strong> on services I own, and mentoring a team that shipped 3 major rollouts without a single P1 incident.</p>
+      <div class="callout">"She won a hackathon, presented at a conference, and still filed her PRs on time." — probably my manager, if he wrote LinkedIn testimonials.</div>
+    </div>
+    <div class="story-aside">
+      <div class="aside-card">
+        <div class="ac-label">currently</div>
+        <div class="ac-stat">Citi</div>
+        <div class="ac-desc">Backend Dev · payments & CRS microservices · team lead</div>
+      </div>
+      <div class="aside-card teal">
+        <div class="ac-label">next chapter</div>
+        <div class="ac-stat">UIUC</div>
+        <div class="ac-desc">MCS · Fall 2026 — Dec 2027</div>
+      </div>
+      <div class="aside-card gold">
+        <div class="ac-label">home base</div>
+        <div class="ac-stat">Chennai</div>
+        <div class="ac-desc">SSN CE · 9.58 GPA · Ranked 2nd · Scholarship winner</div>
+      </div>
+      <div class="aside-card">
+        <div class="ac-label">also</div>
+        <div class="ac-stat" style="font-size:1.1rem;font-weight:700">IIT Madras</div>
+        <div class="ac-desc">B.S. Programming & Data Science · 78 credits · Foundation + Diploma</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<section id="work" class="sw">
+  <div class="sticker">💼 where I've been</div>
+  <div class="sh">Experience</div>
+  <p class="sp">Three roles. Two companies. One consistent theme: ship fast, lead well, automate everything.</p>
+  <div class="tl">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-meta">
+        <span class="tl-co">Citi — Technology Program, App Dev</span>
+        <span class="tl-when">Jul 2024 – Present</span>
+      </div>
+      <div class="tl-role">Backend Developer · Java · Spring Boot · OpenShift · Jenkins · RLM · Lightspeed · Harness</div>
+      <div class="tl-body">
+        <div class="tl-line">Building & owning middleware + core backend services for payments, customer accounts, and CRS (Citi Retail Services) — microservices that handle real money for real people</div>
+        <div class="tl-line">Shipped 5 new microservices across payments and promotions; manages deployment, monitoring, health checks, security remediation, and prod incidents</div>
+        <div class="tl-line">Leading 4 engineers in the promotions domain — delivered 3 large-scale feature rollouts, zero drama, 35% efficiency improvement</div>
+        <div class="tl-line">Drove API integration for new services, improving operational continuity and onboarding across customer services</div>
+        <div class="tl-line">Built <strong>LexiTest-AI</strong> (GenAI + LLMs for automated API testing) and an <strong>MCP-based Agentic AI orchestration platform</strong> — presented at internal AI tech conferences</div>
+        <span class="tl-win">🏆 Won multiple internal hackathons · 4+ quarterly excellence awards</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot t"></div>
+      <div class="tl-meta">
+        <span class="tl-co">FaceTagr — Data Analyst Intern</span>
+        <span class="tl-when">Jan – Jun 2024</span>
+      </div>
+      <div class="tl-role">Data Analyst · Chennai</div>
+      <div class="tl-body">
+        <div class="tl-line">Optimised large-scale data pipelines — 30% efficiency gain, meaningfully reduced latency</div>
+        <div class="tl-line">EDA that actually moved decisions — uncovered business-critical insights that changed how the team operated</div>
+        <div class="tl-line">Built & deployed ML models predicting customer behaviour, boosting engagement by 15%</div>
+        <div class="tl-line">Applied image processing and OCR to extract insights from visual data, expanding analytics reach</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-meta">
+        <span class="tl-co">Citi — EIO&T Summer Analyst Intern</span>
+        <span class="tl-when">May – Jul 2023</span>
+      </div>
+      <div class="tl-role">Full-Stack + Scrum Master · Chennai</div>
+      <div class="tl-body">
+        <div class="tl-line">Built a Resource Management app enabling utilisation tracking — reduced manual entry time by 60% via a slick bulk upload feature</div>
+        <div class="tl-line">Introduced Dynamic Scrum Member Threshold mechanism to prevent resource overallocation</div>
+        <div class="tl-line">Did the whole thing: designed, built, and tested front-end, back-end, and APIs. Also ran standups. Overachiever? Maybe.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects" class="sw-full" style="background:var(--soft)">
+<div class="sw-full-inner">
+  <div class="sticker">🛠 things I actually built</div>
+  <div class="sh">Projects</div>
+  <p class="proj-intro">I have a rule: if I'm building something, it ships. Here's the proof — eight projects, spanning agentic AI, backend systems, ML research, and everything in between.</p>
+  <div class="proj-grid">
+
+    <div class="pc hero-proj">
+      <div class="pc-glow"></div>
+      <div class="pc-eyebrow">
+        <span class="pc-type pt-ai">Agentic AI · MCP</span>
+        <span class="pc-badge">⭐ flagship</span>
+      </div>
+      <div class="pc-name">Intent-Driven API Orchestration Platform</div>
+      <div class="pc-where">@ Citi · Apr 2026</div>
+      <p class="pc-desc">MCP-driven agentic AI system that classifies user intent and autonomously orchestrates multi-step workflows across payment, accounts, verification & promotions. Modular tool integrations, callback handling, intelligent task execution — no hand-holding required.</p>
+      <div class="pc-pills"><span class="pp">Python</span><span class="pp">MCP</span><span class="pp">Agentic AI</span><span class="pp">LLMs</span></div>
+    </div>
+
+    <div class="pc hero-proj">
+      <div class="pc-glow"></div>
+      <div class="pc-eyebrow">
+        <span class="pc-type pt-ai">GenAI · LLMs</span>
+        <span class="pc-badge">⭐ flagship</span>
+      </div>
+      <div class="pc-name">LexiTest AI — LLM-Powered API Testing</div>
+      <div class="pc-where">@ Citi · Jun 2025</div>
+      <p class="pc-desc">AI platform validating conditioned customer accounts and automating API testing workflows. NLP-driven test interpretation, automated validation flows, detailed execution reporting. Presented at internal conferences.</p>
+      <div class="pc-impact">→ Cut dev & testing effort by 70%</div>
+      <div class="pc-pills"><span class="pp">Java</span><span class="pp">Spring Boot</span><span class="pp">GenAI</span><span class="pp">LLMs</span></div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-eyebrow"><span class="pc-type pt-ai">GenAI · Automation</span></div>
+      <div class="pc-name">AI-Powered GST Reconciliation & eBRC Automation</div>
+      <div class="pc-where">Jan 2025</div>
+      <p class="pc-desc">Automated end-to-end eBRC and GST reconciliation processing GSTR-1A, 1B, 1C filings. Eliminated manual government portal interactions. AI-driven correlation & reconciliation engine + contextual AI assistant for compliance querying.</p>
+      <div class="pc-pills"><span class="pp">Python</span><span class="pp">GenAI</span><span class="pp">LLMs</span><span class="pp">Uvicorn</span></div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-eyebrow"><span class="pc-type pt-be">Full-Stack</span></div>
+      <div class="pc-name">Investment Portfolio Tracker & Analytics Platform</div>
+      <div class="pc-where">Aug 2024</div>
+      <p class="pc-desc">Finance portfolio management with real-time investment tracking, performance analytics, interactive dashboards, stock monitoring, buy/sell operations, transaction tracking, and automated financial reporting.</p>
+      <div class="pc-pills"><span class="pp">Java</span><span class="pp">Spring Boot</span><span class="pp">ReactJS</span><span class="pp">MySQL</span></div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-eyebrow"><span class="pc-type pt-da">Deep Learning · NLP</span></div>
+      <div class="pc-name">Real-time Tamil Dialect Speech Recognition</div>
+      <div class="pc-where">Jan 2024 · Published in Springer 📄</div>
+      <p class="pc-desc">Trained OpenAI Whisper and NVIDIA NeMo ASR models on a custom Tamil dialect dataset covering regional and colloquial variations. Real-time recognition and summarisation — built for communities that standard ASR ignores.</p>
+      <div class="pc-pills"><span class="pp">Deep Learning</span><span class="pp">PyTorch</span><span class="pp">Whisper</span><span class="pp">NeMo</span></div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-eyebrow"><span class="pc-type pt-da">ML · E-commerce</span></div>
+      <div class="pc-name">Shopper Behaviour Analysis</div>
+      <div class="pc-where">IIT Madras · Mar 2023</div>
+      <p class="pc-desc">Random Forest ML models analysing user interactions and preferences to extract actionable insights — optimised decision-making and elevated user experience for e-commerce platforms.</p>
+      <div class="pc-pills"><span class="pp">Python</span><span class="pp">Scikit-learn</span><span class="pp">Data Processing</span></div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-eyebrow"><span class="pc-type pt-be">Full-Stack</span></div>
+      <div class="pc-name">Carbon Footprint Tracker</div>
+      <div class="pc-where">Feb 2023</div>
+      <p class="pc-desc">Web app measuring and monitoring carbon emissions for individuals and organisations. Built across all SDLC phases with a focus on reusability — because sustainability deserves good software too.</p>
+      <div class="pc-pills"><span class="pp">Java</span><span class="pp">HTML/CSS/JS</span><span class="pp">Servlets</span><span class="pp">SQL</span><span class="pp">Tomcat</span></div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-eyebrow"><span class="pc-type pt-da">NLP · Competition</span></div>
+      <div class="pc-name">Indian Language Summarisation — ILSUM FIRE'22</div>
+      <div class="pc-where">Oct 2022 · Published CEUR-WS</div>
+      <p class="pc-desc">Summarised 10,000+ news articles in Hindi, English, and Gujarati for the FIRE'22 competition using mT5-m2m-CrossSum, BERT, XL-Sum, and mT5-small. Full performance analysis across models.</p>
+      <div class="pc-pills"><span class="pp">Python</span><span class="pp">PyTorch</span><span class="pp">TensorFlow</span><span class="pp">BERT</span><span class="pp">mT5</span></div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills" class="sw">
+  <div class="sticker">⚙️ the toolkit</div>
+  <div class="sh">Skills</div>
+  <p class="sp">Earned across production systems, research pipelines, and one too many late-night debugging sessions.</p>
+  <div class="sk-grid">
+    <div class="sk-card"><div class="sk-head"><span class="sk-ico">☁️</span>Cloud & DevOps</div><div class="sk-tags"><span class="st">AWS S3</span><span class="st">OpenShift</span><span class="st">Kubernetes</span><span class="st">Docker</span><span class="st">Jenkins</span><span class="st">Harness</span><span class="st">Lightspeed</span><span class="st">RLM</span><span class="st">Unix/Linux</span></div></div>
+    <div class="sk-card"><div class="sk-head"><span class="sk-ico">⚙️</span>Languages</div><div class="sk-tags"><span class="st">Java</span><span class="st">Python</span><span class="st">JavaScript</span><span class="st">SQL</span><span class="st">C/C++</span><span class="st">Bash</span></div></div>
+    <div class="sk-card"><div class="sk-head"><span class="sk-ico">🔧</span>Frameworks</div><div class="sk-tags"><span class="st">Spring Boot</span><span class="st">Microservices</span><span class="st">REST APIs</span><span class="st">ReactJS</span><span class="st">Node.js</span><span class="st">AngularJS</span></div></div>
+    <div class="sk-card"><div class="sk-head"><span class="sk-ico">🤖</span>AI / ML</div><div class="sk-tags"><span class="st">GenAI</span><span class="st">LLMs</span><span class="st">Agentic AI</span><span class="st">MCP</span><span class="st">PyTorch</span><span class="st">TensorFlow</span><span class="st">Scikit-learn</span><span class="st">OCR</span></div></div>
+    <div class="sk-card"><div class="sk-head"><span class="sk-ico">🗄️</span>Databases</div><div class="sk-tags"><span class="st">MySQL</span><span class="st">PostgreSQL</span><span class="st">MongoDB</span></div></div>
+    <div class="sk-card"><div class="sk-head"><span class="sk-ico">📊</span>Tools & Analytics</div><div class="sk-tags"><span class="st">Tableau</span><span class="st">Jira</span><span class="st">Git</span><span class="st">Bitbucket</span></div></div>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <div style="margin-top:52px">
+    <div class="sticker">📄 research</div>
+    <div class="sh" style="margin-bottom:20px">Publications</div>
+    <div class="pub-card">
+      <div class="pub-num">01</div>
+      <div>
+        <div class="pub-venue">Springer · Circuits, Systems and Signal Processing · Apr 2024</div>
+        <div class="pub-title">Real-time Tamil Dialect Speech Recognition and Summarization</div>
+        <p class="pub-body">Built a large-scale Tamil dialect dataset annotating regional, colloquial, and cultural variations. Fine-tuned OpenAI Whisper and NVIDIA NeMo ASR models for real-time recognition — making speech tech work for communities that are usually an afterthought.</p>
+      </div>
+    </div>
+    <div class="pub-card">
+      <div class="pub-num">02</div>
+      <div>
+        <div class="pub-venue">ILSUM FIRE 2022 · CEUR-WS · May 2023</div>
+        <div class="pub-title">Summarising Indian Languages using Machine Learning</div>
+        <p class="pub-body">Text summarisation for Hindi, Gujarati, and English using mT5-m2m-CrossSum, BERT, XL-Sum, and mT5-small as part of FIRE 2022. Full comparative performance analysis across models.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERTS -->
+  <div style="margin-top:44px">
+    <div class="sticker">🎓 credentials</div>
+    <div class="sh" style="font-size:1.4rem;margin-bottom:4px">Certifications</div>
+    <p style="font-size:13px;color:var(--hint);margin-bottom:0">Because one degree wasn't enough.</p>
+    <div class="cert-cloud">
+      <span class="cert"><span class="cdot"></span>Building AI — Univ. of Helsinki</span>
+      <span class="cert"><span class="cdot"></span>Hands-on ML — Univ. of Helsinki</span>
+      <span class="cert"><span class="cdot"></span>Intro to AI — Accenture</span>
+      <span class="cert"><span class="cdot"></span>Edge AI — Intel</span>
+      <span class="cert"><span class="cdot"></span>Intro to VR — Lancaster</span>
+      <span class="cert"><span class="cdot"></span>Data Mining — NPTEL</span>
+      <span class="cert"><span class="cdot"></span>Industry 4.0 & IIoT — NPTEL</span>
+      <span class="cert"><span class="cdot"></span>Discrete Structures — NPTEL</span>
+      <span class="cert"><span class="cdot"></span>Ethical Hacking — Udemy</span>
+      <span class="cert"><span class="cdot"></span>IoT Crash Course — Udemy</span>
+      <span class="cert"><span class="cdot"></span>Sustainable Design — Samsung</span>
+      <span class="cert"><span class="cdot"></span>Effective Leadership — HP Life</span>
+      <span class="cert"><span class="cdot"></span>Young Professional — TCSiON</span>
+    </div>
+  </div>
+
+  <!-- ACTIVITIES -->
+  <div class="act-wrap">
+    <div class="act-title">Beyond the code 🌍</div>
+    <div class="act-sub">Because a résumé that's only work is a little sad.</div>
+    <div class="act-tags">
+      <span class="act-tag">🎓 Google Developer Student Club</span>
+      <span class="act-tag">🤖 SSN Coding Club — AI/ML Core</span>
+      <span class="act-tag">📡 IEEE ComSoc — Key Member</span>
+      <span class="act-tag">🎪 Invente Tech Fest Organiser</span>
+      <span class="act-tag">❤️ Youth Red Cross Volunteer</span>
+      <span class="act-tag">✍️ School Magazine Sub-Editor</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="sw-full" style="padding-bottom:80px">
+<div class="sw-full-inner">
+  <div class="contact-wrap">
+    <div class="cw-bg"></div>
+    <div class="cw-inner">
+      <div class="cw-kicker">✦ open to opportunities ✦</div>
+      <div class="cw-h">Okay, you've seen enough.<br>Let's make something happen.</div>
+      <p class="cw-p">I'm looking for Summer 2027 internships in backend engineering, cloud platforms, or AI-powered product roles. If you want someone who ships, leads, and occasionally wins hackathons — hi, that's me.</p>
+      <div class="cw-links">
+        <a class="cl" href="mailto:aishwaryakrishnakumar123@gmail.com">✉️ aishwaryakrishnakumar123@gmail.com</a>
+        <a class="cl" href="https://linkedin.com/in/Aishwarya-Krishnakumar">💼 LinkedIn</a>
+        <a class="cl" href="https://github.com/Aish-krish">🐙 GitHub</a>
+        <a class="cl" href="tel:+917305771869">📞 +91 73057 71869</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer>Designed & built by <strong>Aishwarya Krishnakumar</strong> · Chennai → Champaign · 2026</footer>
