@@ -7,21 +7,12 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  /* Core palette */
   --p:#5B21B6;--pm:#7C3AED;--pd:#3B0764;
   --plight:#EDE9FE;--psoft:#F5F3FF;
   --t:#0D9488;--tl:#CCFBF1;--tm:#14B8A6;
-  --ink:#0C0A1A;--body:#2D2B3D;--muted:#5C5876;--faint:#8B87A8;
-  /* Backgrounds: hero=dark, progressively lighter */
+  --ink:#0C0A1A;--body:#252338;--muted:#48435E;--faint:#6E6A88;
   --hero-bg-a:#0D0B1E;--hero-bg-b:#1A1040;
-  --s1:#ffffff;  /* about */
-  --s2:#F4F2FF;  /* edu */
-  --s3:#ffffff;  /* exp */
-  --s4:#F4F2FF;  /* projects */
-  --s5:#ffffff;  /* skills */
-  --s6:#0D0B1E;  /* beyond */
-  --s7:#F4F2FF;  /* contact */
-  --warm-gold:#F59E0B;--warm-goldl:#FEF3C7;
+  --s1:#ffffff;--s2:#F4F2FF;--s3:#ffffff;--s4:#F4F2FF;--s5:#ffffff;--s7:#F4F2FF;
   --border:#E4DFEF;--border-dark:rgba(255,255,255,.1);
   --r:14px;--nav:62px;
   --ease:cubic-bezier(.4,0,.2,1);
@@ -45,13 +36,22 @@ nav.light{background:rgba(255,255,255,.94);border-bottom:1px solid var(--border)
 nav.dark .nav-name{color:#fff}
 nav.light .nav-name{color:var(--ink)}
 .nav-name em{color:var(--pm);font-style:normal}
-.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links{display:flex;gap:24px;list-style:none;align-items:center}
 .nav-links a{font-size:13px;font-weight:500;padding:4px 0;
   border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
 nav.dark .nav-links a{color:rgba(255,255,255,.6)}
 nav.dark .nav-links a:hover,nav.dark .nav-links a.active{color:#fff;border-bottom-color:var(--tm)}
 nav.light .nav-links a{color:var(--muted)}
 nav.light .nav-links a:hover,nav.light .nav-links a.active{color:var(--pm);border-bottom-color:var(--pm)}
+.nav-resume{font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;
+  cursor:pointer;border:1px solid;transition:all .18s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:5px;font-family:inherit}
+nav.dark .nav-resume{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06)}
+nav.dark .nav-resume:hover{color:#fff;border-color:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.12)}
+nav.light .nav-resume{color:var(--pm);border-color:var(--border);background:var(--psoft)}
+nav.light .nav-resume:hover{background:var(--plight);border-color:#C4B5FD}
 
 /* LAYOUT */
 section{padding:96px 6%}
@@ -78,43 +78,98 @@ section{padding:96px 6%}
 #hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;
   background:linear-gradient(to bottom,transparent,rgba(13,11,30,.6));
   pointer-events:none}
-.hero-inner{position:relative;z-index:1;max-width:800px}
+
+/* Full-width inner, two-column layout inside */
+.hero-inner{position:relative;z-index:1;width:100%;max-width:1040px;margin:0 auto;padding:0 6%}
+
+/* Two columns: text left, photo right */
+.hero-layout{display:grid;grid-template-columns:1fr 220px;gap:56px;align-items:center}
+.hero-content{display:flex;flex-direction:column;min-width:0}
+
+/* Name line — green accent tag area */
 .hero-tag{display:inline-flex;align-items:center;gap:10px;
-  font-size:12px;font-weight:600;color:var(--tm);letter-spacing:.5px;
-  margin-bottom:28px;opacity:.9}
-.hero-tag::before{content:'';width:22px;height:2px;background:var(--tm);border-radius:2px;flex-shrink:0}
-h1.hero-h{font-size:clamp(2.5rem,6.5vw,4.2rem);font-weight:900;
-  color:#fff;letter-spacing:-2.5px;line-height:1.05;margin-bottom:28px}
+  font-size:13px;font-weight:700;color:var(--tm);letter-spacing:.4px;
+  margin-bottom:14px}
+.hero-tag::before{content:'';width:22px;height:2px;background:var(--tm);
+  border-radius:2px;flex-shrink:0}
+
+/* Identity line — replaces old tagline, sits above h1 */
+.hero-identity{font-size:12px;color:rgba(255,255,255,.55);font-weight:500;
+  letter-spacing:.3px;margin-bottom:22px;line-height:1.6;
+  display:flex;flex-wrap:wrap;align-items:center;gap:0;row-gap:6px}
+.hi-item{white-space:nowrap}
+.hi-sep{color:rgba(255,255,255,.25);margin:0 9px;flex-shrink:0}
+.hi-item.bright{color:rgba(255,255,255,.8);font-weight:600}
+
+h1.hero-h{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:900;
+  color:#fff;letter-spacing:-2px;line-height:1.06;margin-bottom:22px}
 h1.hero-h .hl{display:inline;
   background:linear-gradient(135deg,#A78BFA,var(--tm));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text}
-h1.hero-h .soft{color:rgba(255,255,255,.55);font-weight:400}
-.hero-p{font-size:clamp(1rem,2vw,1.12rem);color:rgba(255,255,255,.75);
-  max-width:580px;line-height:1.85;margin-bottom:12px}
-.hero-aside{font-size:13px;color:rgba(255,255,255,.4);font-style:italic;
-  margin-bottom:44px;line-height:1.7}
-.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:72px}
+h1.hero-h .soft{color:rgba(255,255,255,.45);font-weight:400}
+
+.hero-p{font-size:15px;color:rgba(255,255,255,.78);
+  max-width:560px;line-height:1.85;margin-bottom:22px}
+
+/* Internship callout — visible but not a banner */
+.hero-internship{display:inline-flex;align-items:center;gap:8px;
+  margin-bottom:28px;font-size:14px;font-weight:700;
+  color:rgba(255,255,255,.95);letter-spacing:.1px}
+.hero-internship::before{content:'';width:8px;height:8px;border-radius:50%;
+  background:var(--tm);flex-shrink:0;
+  box-shadow:0 0 0 3px rgba(20,184,166,.25);
+  animation:pip 1.8s ease-in-out infinite}
+
+/* Buttons */
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
 .btn{padding:12px 24px;border-radius:10px;font-size:13px;font-weight:600;
   cursor:pointer;border:none;transition:all .18s var(--ease);
-  display:inline-flex;align-items:center;gap:6px}
+  display:inline-flex;align-items:center;gap:6px;font-family:inherit}
 .btn:focus-visible{outline:3px solid var(--pm);outline-offset:3px}
 .btn-p{background:linear-gradient(135deg,var(--pm),#4F46E5);color:#fff;
   box-shadow:0 4px 20px rgba(124,58,237,.4)}
 .btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,58,237,.5)}
-.btn-s{background:rgba(255,255,255,.08);color:#fff;
-  border:1.5px solid rgba(255,255,255,.2);backdrop-filter:blur(8px)}
-.btn-s:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.35)}
+.btn-s{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9);
+  border:1.5px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.btn-s:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4);color:#fff}
+/* Resume button matches btn-s but slightly more distinct */
+.btn-resume{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85);
+  border:1.5px solid rgba(255,255,255,.18);backdrop-filter:blur(8px)}
+.btn-resume:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.35);color:#fff}
+
+/* Photo — right column */
+.hero-photo-wrap{display:flex;justify-content:center;align-items:center}
+.hero-photo-circle{width:200px;height:200px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.14);overflow:hidden;
+  background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(13,148,136,.22));
+  display:flex;align-items:center;justify-content:center;
+  font-size:52px;font-weight:800;color:rgba(255,255,255,.45);
+  letter-spacing:-1px;flex-shrink:0;
+  box-shadow:0 0 60px rgba(124,58,237,.2),0 0 0 1px rgba(255,255,255,.06)}
+.hero-photo-circle img{width:100%;height:100%;object-fit:cover}
+
 .hero-scroll{font-size:11px;color:rgba(255,255,255,.3);
-  display:flex;align-items:center;gap:8px;letter-spacing:.5px}
+  display:flex;align-items:center;gap:8px;letter-spacing:.5px;margin-top:0}
 .scroll-pip{width:5px;height:5px;border-radius:50%;background:var(--tm);
   animation:pip 1.8s ease-in-out infinite}
 @keyframes pip{0%,100%{opacity:.3;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
 
+/* Responsive hero */
+@media(max-width:900px){
+  .hero-layout{grid-template-columns:1fr 160px;gap:36px}
+  .hero-photo-circle{width:150px;height:150px;font-size:40px}
+}
+@media(max-width:680px){
+  .hero-layout{grid-template-columns:1fr;gap:0}
+  .hero-photo-wrap{display:none} /* hide on small mobile — text is the focus */
+  h1.hero-h{font-size:clamp(2rem,8vw,3rem);letter-spacing:-1.5px}
+}
+
 /* ABOUT */
 #about{background:var(--s1)}
 .about-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:52px;align-items:start}
-.about-text p{font-size:15px;color:var(--body);line-height:1.9;margin-bottom:18px}
+.about-text p{font-size:16px;color:var(--body);line-height:1.9;margin-bottom:18px}
 .about-text p:last-child{margin-bottom:0}
 .about-text strong{color:var(--ink);font-weight:600}
 .about-pull{margin-top:24px;padding:18px 22px;
@@ -127,9 +182,9 @@ h1.hero-h .soft{color:rgba(255,255,255,.55);font-weight:400}
 .sc:hover{border-color:#C4B5FD;transform:translateY(-1px);
   box-shadow:0 4px 16px rgba(124,58,237,.08)}
 .sc-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
-  color:var(--faint);margin-bottom:5px}
+  color:var(--muted);margin-bottom:5px}
 .sc-val{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-.3px}
-.sc-sub{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4}
+.sc-sub{font-size:13px;color:var(--body);margin-top:3px;line-height:1.4}
 
 /* EDUCATION */
 #education{background:var(--s2)}
@@ -144,9 +199,9 @@ h1.hero-h .soft{color:rgba(255,255,255,.55);font-weight:400}
 .c2::before{background:linear-gradient(180deg,var(--tm),var(--t))}
 .c3::before{background:var(--faint)}
 .edu-school{font-weight:700;font-size:15px;color:var(--ink)}
-.edu-deg{font-size:13px;color:var(--muted);margin-top:3px}
-.edu-note{font-size:12px;color:var(--t);margin-top:6px;font-weight:500}
-.edu-date{font-size:11px;color:var(--faint);text-align:right;white-space:nowrap;padding-top:2px}
+.edu-deg{font-size:14px;color:var(--muted);margin-top:3px}
+.edu-note{font-size:13px;color:var(--t);margin-top:6px;font-weight:500}
+.edu-date{font-size:12px;color:var(--muted);text-align:right;white-space:nowrap;padding-top:2px}
 
 /* EXPERIENCE */
 #experience{background:var(--s3)}
@@ -162,13 +217,13 @@ h1.hero-h .soft{color:rgba(255,255,255,.55);font-weight:400}
 .tl-head{display:flex;justify-content:space-between;align-items:flex-start;
   flex-wrap:wrap;gap:6px;margin-bottom:3px}
 .tl-co{font-weight:800;font-size:15px;color:var(--ink);letter-spacing:-.2px}
-.tl-when{font-size:11px;color:var(--faint);background:var(--s2);
+.tl-when{font-size:12px;color:var(--muted);background:var(--s2);
   border:1px solid var(--border);padding:3px 12px;border-radius:20px;
   font-weight:500;white-space:nowrap}
-.tl-role{font-size:11px;font-weight:700;color:var(--t);letter-spacing:.4px;
+.tl-role{font-size:12px;font-weight:700;color:var(--t);letter-spacing:.3px;
   text-transform:uppercase;margin-bottom:14px}
 .tl-bul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.tl-bul li{font-size:13px;color:var(--body);line-height:1.72;
+.tl-bul li{font-size:14px;color:var(--body);line-height:1.72;
   padding-left:16px;position:relative}
 .tl-bul li::before{content:'–';position:absolute;left:0;color:var(--pm);font-weight:700}
 .tl-tag{display:inline-block;font-size:11px;font-weight:600;
@@ -184,48 +239,54 @@ h1.hero-h .soft{color:rgba(255,255,255,.55);font-weight:400}
   transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden}
 .pc:hover{border-color:#C4B5FD;transform:translateY(-3px);
   box-shadow:0 12px 36px rgba(109,40,217,.1)}
-.pc.feat{border-color:var(--pm);border-width:1.5px}
-.pc.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--pm),var(--tm))}
-.pc-top{display:flex;align-items:center;justify-content:space-between}
+.pc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .pc-type{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
-  padding:3px 10px;border-radius:20px}
+  padding:3px 10px;border-radius:20px;flex-shrink:0}
 .pt-ai{background:var(--plight);color:var(--pm)}
 .pt-be{background:var(--tl);color:var(--t)}
 .pt-ml{background:#FEF3C7;color:#92400E}
-.pc-badge{font-size:10px;font-weight:600;color:var(--faint);letter-spacing:.3px}
 .pc-name{font-size:15px;font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-.2px}
-.pc-where{font-size:11px;color:var(--faint)}
-.pc-desc{font-size:13px;color:var(--body);line-height:1.75;flex:1}
-.pc-pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto}
-.pp{font-size:10px;border:1px solid var(--border);border-radius:8px;
+.pc-where{font-size:12px;color:var(--muted)}
+.pc-desc{font-size:13.5px;color:var(--body);line-height:1.75;flex:1}
+.pc-pills{display:flex;flex-wrap:wrap;gap:5px}
+.pp{font-size:11px;border:1px solid var(--border);border-radius:8px;
   padding:2px 9px;color:var(--muted);background:var(--s2)}
+
+/* PROJECT LINKS — subtle, uniform across all cards */
+.pc-links{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin-top:2px}
+.pc-link{font-size:12px;font-weight:600;color:var(--muted);
+  transition:color .15s;display:inline-flex;align-items:center;gap:3px}
+.pc-link:hover{color:var(--pm)}
+.pc-link-sep{color:var(--border);margin:0 8px;font-size:12px}
 
 /* SKILLS */
 #skills{background:var(--s5)}
 .sk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
 .sk{background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
-.sk-h{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px;
+.sk-h{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px;
   display:flex;align-items:center;gap:8px}
 .sk-tags{display:flex;flex-wrap:wrap;gap:5px}
-.st{font-size:11px;background:#fff;border:1px solid var(--border);
-  border-radius:7px;padding:3px 10px;color:var(--muted)}
+.st{font-size:12px;background:#fff;border:1px solid var(--border);
+  border-radius:7px;padding:3px 10px;color:var(--body)}
 
 /* PUBLICATIONS */
 .pub-list{display:flex;flex-direction:column;gap:12px;margin-bottom:44px}
 .pub{background:var(--s2);border:1px solid var(--border);border-radius:var(--r);
   padding:24px 28px;display:flex;gap:20px;align-items:flex-start}
-.pub-n{font-size:2rem;font-weight:900;color:var(--border);line-height:1;
+.pub-n{font-size:2rem;font-weight:900;color:var(--pm);opacity:.25;line-height:1;
   flex-shrink:0;font-family:Georgia,serif}
-.pub-venue{font-size:10px;font-weight:700;color:var(--tm);letter-spacing:.5px;
+.pub-venue{font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.5px;
   text-transform:uppercase;margin-bottom:5px}
 .pub-title{font-weight:700;font-size:15px;color:var(--ink);margin-bottom:6px;letter-spacing:-.2px}
-.pub-body{font-size:13px;color:var(--body);line-height:1.75}
+.pub-body{font-size:14px;color:var(--body);line-height:1.75;margin-bottom:8px}
+.pub-link{font-size:12px;font-weight:600;color:var(--tm);
+  display:inline-flex;align-items:center;gap:3px;transition:opacity .15s}
+.pub-link:hover{opacity:.7}
 
 /* CERTS */
 .cert-wrap{display:flex;flex-wrap:wrap;gap:8px}
 .cert{background:var(--s2);border:1px solid var(--border);
-  border-radius:20px;padding:5px 14px;font-size:12px;color:var(--muted)}
+  border-radius:20px;padding:5px 14px;font-size:12.5px;color:var(--body)}
 
 /* BEYOND */
 #beyond{background:linear-gradient(160deg,#0D0B1E 0%,#130D35 60%,#0C1A2E 100%);
@@ -243,10 +304,10 @@ h1.hero-h .soft{color:rgba(255,255,255,.55);font-weight:400}
   border-color:rgba(255,255,255,.18)}
 .bc-icon{font-size:26px;margin-bottom:12px}
 .bc-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
-.bc-desc{font-size:12px;color:rgba(255,255,255,.5);line-height:1.65}
+.bc-desc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.65}
 .beyond-pull{margin-top:36px;padding:20px 24px;
   background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
-  border-radius:var(--r);font-size:14px;color:rgba(255,255,255,.5);
+  border-radius:var(--r);font-size:14px;color:rgba(255,255,255,.6);
   line-height:1.85;font-style:italic}
 
 /* CONTACT */
@@ -258,17 +319,17 @@ h1.hero-h .soft{color:rgba(255,255,255,.55);font-weight:400}
   background:radial-gradient(ellipse at 25% 60%,rgba(20,184,166,.25) 0%,transparent 55%),
              radial-gradient(ellipse at 75% 40%,rgba(139,92,246,.3) 0%,transparent 55%)}
 .ci{position:relative;z-index:1}
-.ck{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
-  color:var(--tl);margin-bottom:16px;opacity:.8}
+.ck{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--tl);margin-bottom:16px}
 .ch{font-size:clamp(1.5rem,3.5vw,2.3rem);font-weight:900;color:#fff;
   margin-bottom:14px;letter-spacing:-.5px;line-height:1.18}
-.cp{color:rgba(255,255,255,.6);font-size:15px;
+.cp{color:rgba(255,255,255,.75);font-size:15px;
   max-width:460px;margin:0 auto 32px;line-height:1.8}
 .c-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
 .cl{display:flex;align-items:center;gap:7px;
   background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
   color:rgba(255,255,255,.9);border-radius:10px;padding:11px 20px;
-  font-size:13px;font-weight:500;transition:all .18s;cursor:pointer}
+  font-size:13px;font-weight:500;transition:all .18s;cursor:pointer;font-family:inherit}
 .cl:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);
   color:#fff;transform:translateY(-1px)}
 .cl:focus-visible{outline:2px solid rgba(255,255,255,.6);outline-offset:2px}
@@ -277,9 +338,9 @@ h1.hero-h .soft{color:rgba(255,255,255,.55);font-weight:400}
 .div{height:1px;background:var(--border);margin:52px 0}
 
 /* FOOTER */
-footer{text-align:center;padding:28px;font-size:12px;color:var(--faint);
+footer{text-align:center;padding:28px;font-size:13px;color:var(--muted);
   background:#fff;border-top:1px solid var(--border)}
-footer strong{color:var(--muted);font-weight:600}
+footer strong{color:var(--ink);font-weight:700}
 
 /* RESPONSIVE */
 @media(max-width:768px){
@@ -289,17 +350,19 @@ footer strong{color:var(--muted);font-weight:600}
   .edu-date{text-align:left}
   .contact-box{padding:44px 24px}
   .nav-inner{padding:0 5%}
-  .nav-links{gap:18px}
+  .nav-links{gap:16px}
   .beyond-grid{grid-template-columns:repeat(2,1fr)}
   h1.hero-h{letter-spacing:-1.8px}
 }
 @media(max-width:520px){
   .proj-grid,.sk-grid{grid-template-columns:1fr}
   .nav-links a{font-size:12px}
-  .nav-links{gap:12px}
+  .nav-links{gap:10px}
+  .nav-resume{display:none}
   .beyond-grid{grid-template-columns:1fr}
   h1.hero-h{letter-spacing:-1.2px}
   .contact-box{padding:36px 20px}
+  .hero-achievements{row-gap:6px}
 }
 </style>
 </head>
@@ -316,6 +379,7 @@ footer strong{color:var(--muted);font-weight:600}
       <li><a href="#skills">Skills</a></li>
       <li><a href="#beyond">Beyond</a></li>
       <li><a href="#contact">Say hi</a></li>
+      <li><button class="nav-resume" onclick="downloadResume()" aria-label="Download resume">Resume</button></li>
     </ul>
   </div>
 </nav>
@@ -323,23 +387,65 @@ footer strong{color:var(--muted);font-weight:600}
 <!-- HERO -->
 <section id="hero" aria-label="Introduction">
 <div class="hero-inner">
-  <div class="hero-tag">Software engineer, AI builder, Chennai to Champaign</div>
-  <h1 class="hero-h">
-    Most of my projects start<br>
-    with <span class="hl">"there has to be<br>a better way"</span><br>
-    <span class="soft">and end up considerably larger.</span>
-  </h1>
-  <p class="hero-p">
-    I like building systems that make complicated things feel simpler. I also run, sing (yes, I post the covers), and follow Formula 1 with perhaps more investment than is strictly rational. Somewhere in between, I work on payments infrastructure at Citi and think a lot about what AI can do for engineering teams.
-  </p>
-  <p class="hero-aside">
-    Currently at Citi. Starting my MCS at UIUC in Fall 2026. Looking for Summer 2027 internships in backend, cloud, or AI engineering.
-  </p>
-  <div class="hero-btns">
-    <button class="btn btn-p" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})" aria-label="See my projects">See what I've been building</button>
-    <button class="btn btn-s" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" aria-label="Get in touch">Get in touch</button>
-  </div>
-  <div class="hero-scroll" aria-hidden="true"><span class="scroll-pip"></span> scroll to explore</div>
+  <div class="hero-layout">
+
+    <!-- LEFT: all text content -->
+    <div class="hero-content">
+
+      <!-- Name — green accent line -->
+      <div class="hero-tag">Hi, I'm Aishwarya Krishnakumar.</div>
+
+      <!-- Professional identity — replaces old tagline -->
+      <div class="hero-identity" aria-label="Professional identity">
+        <span class="hi-item bright">Software Engineer @ Citi</span>
+        <span class="hi-sep">·</span>
+        <span class="hi-item bright">Incoming MCS @ UIUC, Fall 2026</span>
+        <span class="hi-sep">·</span>
+        <span class="hi-item">Multiple Hackathon Wins</span>
+        <span class="hi-sep">·</span>
+        <span class="hi-item">Published Researcher</span>
+        <span class="hi-sep">·</span>
+        <span class="hi-item">Backend · AI · NLP</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="hero-h">
+        Most of my projects start<br>
+        with <span class="hl">"there has to be<br>a better way"</span><br>
+        <span class="soft">and end up considerably larger.</span>
+      </h1>
+
+      <!-- Body -->
+      <p class="hero-p">
+        I like building systems that make complicated things feel simpler. I also run, sing (yes, I post the covers), and follow Formula 1 with perhaps more investment than is strictly rational. Somewhere in between, I work on payments infrastructure at Citi and think a lot about what AI can do for engineering teams.
+      </p>
+
+      <!-- Internship — high contrast, not a banner -->
+      <div class="hero-internship">Looking for Summer 2027 SWE Internships</div>
+
+      <!-- Buttons -->
+      <div class="hero-btns">
+        <button class="btn btn-p" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})" aria-label="See my projects">See what I've been building</button>
+        <button class="btn btn-resume" onclick="downloadResume()" aria-label="Download resume">View Resume</button>
+        <button class="btn btn-s" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" aria-label="Get in touch">Get in touch</button>
+      </div>
+
+      <div class="hero-scroll" aria-hidden="true"><span class="scroll-pip"></span> scroll to explore</div>
+
+    </div><!-- /hero-content -->
+
+    <!-- RIGHT: photo -->
+    <div class="hero-photo-wrap" aria-hidden="true">
+      <!--
+        To add your photo, replace the div below with:
+        <img src="your-photo.jpg" alt="Aishwarya Krishnakumar" class="hero-photo-circle">
+      -->
+      <img src="assets/pic.JPG" alt="Aishwarya Krishnakumar" class="hero-photo-circle">
+
+      <!-- <div class="hero-photo-circle">AK</div> -->
+    </div>
+
+  </div><!-- /hero-layout -->
 </div>
 </section>
 
@@ -350,10 +456,10 @@ footer strong{color:var(--muted);font-weight:600}
   <div class="about-grid">
     <div class="about-text">
       <p>
-        I got into software engineering because I wanted to understand how things worked underneath. That curiosity has mostly stayed intact, it has just gotten more specific over time. These days I am most interested in <strong>systems that are hard to reason about</strong>: distributed architectures, agents that have to make decisions mid-flight, and the deceptively tricky question of what "reliable" even means when the world is messy.
+        I got into software engineering because I wanted to understand how things worked underneath. That curiosity has mostly stayed intact — it has just gotten more specific over time. These days I am most interested in <strong>systems that are hard to reason about</strong>: distributed architectures, agents that have to make decisions mid-flight, and the deceptively tricky question of what "reliable" even means when the world is messy.
       </p>
       <p>
-        At Citi, I own backend services that handle real money for real people. That context has been a good teacher. It has made me take correctness seriously and given me a healthy skepticism toward anything that looks like it might fail quietly. I have also spent a lot of time thinking about how AI can make engineers faster, not by replacing judgment, but by automating the parts that do not need it.
+        At Citi, I own backend services that handle real money for real people. That context has been a good teacher. It has made me take correctness seriously and given me a healthy skepticism toward anything that looks like it might fail quietly. I have also spent a lot of time thinking about how AI can make engineers faster — not by replacing judgment, but by automating the parts that do not need it.
       </p>
       <p>
         I have shipped two production AI tools at work: one that automates API testing using LLMs, and an MCP-based agentic system for orchestrating workflows across our platform. Both started as experiments. Both grew larger than expected. I have learned that is usually a sign you are solving a real problem.
@@ -362,29 +468,29 @@ footer strong{color:var(--muted);font-weight:600}
         Outside engineering, I run, swim, sing (and yes, I post covers online), watch Formula 1, and rewatch Modern Family when my brain needs a break. I was also once a school magazine sub-editor, which still surprises people more than it should.
       </p>
       <div class="about-pull">
-        I completed two undergraduate degrees simultaneously, at SSN College of Engineering and IIT Madras, which seemed like a reasonable idea at the time and, honestly, mostly was.
+        I completed two undergraduate degrees simultaneously — at SSN College of Engineering and IIT Madras — which seemed like a reasonable idea at the time and, honestly, mostly was.
       </div>
     </div>
     <div class="sidebar" aria-label="Quick facts">
-      <div class="sc">
-        <div class="sc-lbl">Currently</div>
-        <div class="sc-val">Citi</div>
-        <div class="sc-sub">Software Engineer, payments and microservices</div>
-      </div>
       <div class="sc">
         <div class="sc-lbl">Next chapter</div>
         <div class="sc-val">UIUC</div>
         <div class="sc-sub">Master of Computer Science, Fall 2026 to Dec 2027</div>
       </div>
       <div class="sc">
+        <div class="sc-lbl">Currently</div>
+        <div class="sc-val">Citi</div>
+        <div class="sc-sub">Software Engineer, payments and microservices</div>
+      </div>
+      <div class="sc">
         <div class="sc-lbl">Undergrad</div>
         <div class="sc-val">SSN CE + IIT Madras</div>
         <div class="sc-sub">CS&E and Programming & Data Science, running in parallel</div>
       </div>
-      <div class="sc">
-        <div class="sc-lbl">Looking for</div>
-        <div class="sc-val">Summer 2027</div>
-        <div class="sc-sub">Software, backend, cloud, platform, or AI engineering roles</div>
+      <div class="sc" style="border-color:var(--tm);background:linear-gradient(135deg,var(--psoft),var(--tl))">
+        <div class="sc-lbl" style="color:var(--t)">Looking for</div>
+        <div class="sc-val" style="font-size:14px">Summer 2027 SWE Internships</div>
+        <div class="sc-sub">Software · backend · cloud · platform · AI engineering</div>
       </div>
     </div>
   </div>
@@ -408,14 +514,14 @@ footer strong{color:var(--muted);font-weight:600}
       <div>
         <div class="edu-school">Sri Sivasubramaniya Nadar College of Engineering</div>
         <div class="edu-deg">B.E. Computer Science & Engineering</div>
-        <div class="edu-note">Outstanding Scholarship, Aug 2020 to May 2024</div>
+        <div class="edu-note">🏆 Outstanding Scholarship · Aug 2020 to May 2024</div>
       </div>
       <div class="edu-date">Graduated May 2024</div>
     </div>
     <div class="edu-card c3">
       <div>
         <div class="edu-school">IIT Madras</div>
-        <div class="edu-deg">B.S. Programming & Data Science, Foundation level, 78 credits completed</div>
+        <div class="edu-deg">B.S. Programming & Data Science · Foundation level, 78 credits completed</div>
       </div>
       <div class="edu-date">Sep 2020 to Apr 2023</div>
     </div>
@@ -428,7 +534,7 @@ footer strong{color:var(--muted);font-weight:600}
 <div class="inner">
   <span class="label">Work</span>
   <h2 class="sh">Where I have worked</h2>
-  <p class="sp">Three roles, two companies, and a consistent pattern of finding ways to make things more automated than I found them.</p>
+  <p class="sp">Three roles, two companies, and a consistent pattern of leaving things more automated than I found them.</p>
   <div class="tl">
 
     <div class="tl-item">
@@ -439,11 +545,12 @@ footer strong{color:var(--muted);font-weight:600}
       </div>
       <div class="tl-role">Software Engineer · Java · Spring Boot · OpenShift · Jenkins · Chennai</div>
       <ul class="tl-bul">
-        <li>Build and maintain middleware and core backend services for payments, customer accounts, and CRS, systems that need to be right before they can be clever</li>
-        <li>Shipped five microservices across the payments and promotions domains, responsible for deployment, monitoring, health checks, and production stability end-to-end</li>
-        <li>Lead a small team in the promotions domain, focused on careful delivery and making code reviews genuinely useful</li>
-        <li>Participate in Citi AI Days and Engineering Excellence initiatives, and have presented at internal tech conferences</li>
-        <li>The two AI tools I built here: an LLM-powered API testing platform (LexiTest AI) and an MCP-based agentic system for workflow orchestration. Both started as experiments and turned into things people actually use</li>
+        <li>Build and maintain middleware and core backend services for payments, customer accounts, and CRS — systems where getting it right matters more than getting it done fast</li>
+        <li>Shipped 5 production microservices across the payments and promotions domains; responsible for deployment, monitoring, health checks, and production stability end-to-end</li>
+        <li>Lead a team of 4 engineers in the promotions domain — coordinate releases, review PRs, and have delivered 3 large-scale feature rollouts; integration work improved service efficiency by 35%</li>
+        <li>Participate in Citi AI Days and Engineering Excellence initiatives; have presented at internal AI tech conferences</li>
+        <li>LexiTest AI: an LLM-powered platform that automated API testing workflows, reducing end-to-end testing effort by 70% — started as a frustration with how slow manual testing was</li>
+        <li>MCP Orchestration Platform: an agentic AI system for intent-driven workflow execution across payments, accounts, and promotions — built as an experiment, ended up in production</li>
       </ul>
       <span class="tl-tag">Won multiple internal hackathons</span>
     </div>
@@ -456,8 +563,8 @@ footer strong{color:var(--muted);font-weight:600}
       </div>
       <div class="tl-role">Data Analyst · Chennai</div>
       <ul class="tl-bul">
-        <li>Worked on data pipelines and exploratory analysis, the kind of work where the interesting part is figuring out what questions to ask before writing any code</li>
-        <li>Built ML models for customer behaviour prediction and applied OCR to extract insights from visual data, which is more fiddly than it sounds</li>
+        <li>Worked on data pipelines and exploratory analysis — the kind of work where the interesting part is figuring out what questions to ask before writing any code; improved pipeline efficiency by 30%</li>
+        <li>Built ML models for customer behaviour prediction that lifted engagement by 15%; applied OCR to extract insights from visual data, which is more fiddly than it sounds</li>
       </ul>
     </div>
 
@@ -469,8 +576,8 @@ footer strong{color:var(--muted);font-weight:600}
       </div>
       <div class="tl-role">Full-Stack Developer and Scrum Master · Chennai</div>
       <ul class="tl-bul">
-        <li>Built a resource management application end-to-end, front-end, back-end, and APIs, while also running standups as Scrum Master, which was an interesting combination</li>
-        <li>Added a bulk upload feature that meaningfully reduced manual data entry, and a threshold mechanism to stop teams from accidentally over-allocating resources</li>
+        <li>Built a resource management application end-to-end — front-end, back-end, and APIs — while also running standups as Scrum Master, which was an interesting combination</li>
+        <li>Added a bulk upload feature for resources and vendor data that reduced manual entry time by 60%, and a dynamic threshold mechanism to prevent resource overallocation</li>
       </ul>
     </div>
 
@@ -486,34 +593,37 @@ footer strong{color:var(--muted);font-weight:600}
   <p class="sp">A mix of production work, published research, and problems that seemed interesting enough to sit with for a while.</p>
   <div class="proj-grid">
 
-    <article class="pc feat">
+    <article class="pc">
       <div class="pc-top">
-        <span class="pc-type pt-ai">Agentic AI, MCP</span>
-        <span class="pc-badge">Production</span>
+        <span class="pc-type pt-ai">Agentic AI · MCP</span>
       </div>
       <div class="pc-name">Intent-Driven API Orchestration</div>
-      <div class="pc-where">Citi, Apr 2026</div>
-      <p class="pc-desc">The challenge was getting a system to figure out what you want and then execute it, routing across payments, accounts, and promotions without being told each step explicitly. The hard part was handling ambiguity gracefully, which turns out to be considerably more interesting than just handling the happy path.</p>
+      <div class="pc-where">Citi · Apr 2026</div>
+      <p class="pc-desc">The challenge was getting a system to figure out what you want and then execute it — routing across payments, accounts, and promotions without being told each step explicitly. The hard part was handling ambiguity gracefully, which turns out to be considerably more interesting than just handling the happy path.</p>
       <div class="pc-pills"><span class="pp">Python</span><span class="pp">MCP</span><span class="pp">LLMs</span><span class="pp">Agentic AI</span></div>
-    </article>
-
-    <article class="pc feat">
-      <div class="pc-top">
-        <span class="pc-type pt-ai">GenAI, Testing</span>
-        <span class="pc-badge">Production</span>
-      </div>
-      <div class="pc-name">LexiTest AI</div>
-      <div class="pc-where">Citi, Jun 2025</div>
-      <p class="pc-desc">This started as a frustration: API testing was tedious, manual, and slow. LexiTest uses LLMs to interpret test descriptions in plain language, run validation flows, and report results, turning a multi-hour setup into something much closer to a conversation with the system.</p>
-      <div class="pc-pills"><span class="pp">Java</span><span class="pp">Spring Boot</span><span class="pp">GenAI</span><span class="pp">LLMs</span></div>
+      <div class="pc-links"><span class="pc-link">🔒 Internal production project</span></div>
     </article>
 
     <article class="pc">
-      <div class="pc-top"><span class="pc-type pt-ai">GenAI, Automation</span></div>
+      <div class="pc-top">
+        <span class="pc-type pt-ai">GenAI · Testing</span>
+      </div>
+      <div class="pc-name">LexiTest AI</div>
+      <div class="pc-where">Citi · Jun 2025</div>
+      <p class="pc-desc">This started as a frustration: API testing was tedious, manual, and slow. LexiTest uses LLMs to interpret test descriptions in plain language, run validation flows, and report results — turning a multi-hour setup into something much closer to a conversation with the system.</p>
+      <div class="pc-pills"><span class="pp">Java</span><span class="pp">Spring Boot</span><span class="pp">GenAI</span><span class="pp">LLMs</span></div>
+      <div class="pc-links"><span class="pc-link">🔒 Internal production project</span></div>
+    </article>
+
+    <article class="pc">
+      <div class="pc-top"><span class="pc-type pt-ai">GenAI · Automation</span></div>
       <div class="pc-name">GST Reconciliation and eBRC Automation</div>
       <div class="pc-where">Jan 2025</div>
-      <p class="pc-desc">Tax reconciliation is exactly the kind of work that is repetitive, rule-based, and easy to get wrong. This automates GSTR-1A/1B/1C processing and adds a conversational AI layer for querying compliance data, replacing a slow manual process with something you can actually ask questions to.</p>
+      <p class="pc-desc">Tax reconciliation is exactly the kind of work that is repetitive, rule-based, and easy to get wrong. This automates GSTR-1A/1B/1C processing and adds a conversational AI layer for querying compliance data — replacing a slow manual process with something you can actually ask questions to.</p>
       <div class="pc-pills"><span class="pp">Python</span><span class="pp">GenAI</span><span class="pp">LLMs</span><span class="pp">Uvicorn</span></div>
+      <div class="pc-links">
+        <a class="pc-link" href="https://github.com/Aish-krish" target="_blank" rel="noopener">↗ GitHub</a>
+      </div>
     </article>
 
     <article class="pc">
@@ -522,22 +632,33 @@ footer strong{color:var(--muted);font-weight:600}
       <div class="pc-where">Aug 2024</div>
       <p class="pc-desc">A portfolio management system with real-time tracking, stock monitoring, transaction history, and automated reporting. Mostly built to understand how financial data moves through a system end-to-end, which turned out to be more interesting than expected.</p>
       <div class="pc-pills"><span class="pp">Java</span><span class="pp">Spring Boot</span><span class="pp">ReactJS</span><span class="pp">MySQL</span></div>
+      <div class="pc-links">
+        <a class="pc-link" href="https://github.com/Aish-krish" target="_blank" rel="noopener">↗ GitHub</a>
+      </div>
     </article>
 
     <article class="pc">
-      <div class="pc-top"><span class="pc-type pt-ml">Deep Learning, NLP</span></div>
+      <div class="pc-top"><span class="pc-type pt-ml">Deep Learning · NLP</span></div>
       <div class="pc-name">Tamil Dialect Speech Recognition</div>
-      <div class="pc-where">Jan 2024, Published in Springer</div>
+      <div class="pc-where">Jan 2024 · Published in Springer</div>
       <p class="pc-desc">Standard ASR models are trained on clean, formal Tamil. They do not handle dialects well, which means they are not actually useful for how most people speak. This project built a dataset of regional and colloquial variation and fine-tuned Whisper and NeMo on it.</p>
       <div class="pc-pills"><span class="pp">Deep Learning</span><span class="pp">PyTorch</span><span class="pp">Whisper</span><span class="pp">NeMo</span></div>
+      <div class="pc-links">
+        <a class="pc-link" href="https://link.springer.com/search?query=Tamil+Dialect+Speech+Recognition+Krishnakumar" target="_blank" rel="noopener">↗ Paper</a>
+        <span class="pc-link-sep">·</span>
+        <a class="pc-link" href="https://github.com/Aish-krish" target="_blank" rel="noopener">↗ GitHub</a>
+      </div>
     </article>
 
     <article class="pc">
-      <div class="pc-top"><span class="pc-type pt-ml">ML, E-commerce</span></div>
+      <div class="pc-top"><span class="pc-type pt-ml">ML · E-commerce</span></div>
       <div class="pc-name">Shopper Behaviour Analysis</div>
-      <div class="pc-where">IIT Madras, Mar 2023</div>
-      <p class="pc-desc">Used Random Forest models to find patterns in e-commerce user behaviour. The interesting challenge was not the modelling. It was figuring out which signals in messy interaction data were actually meaningful versus just noise.</p>
+      <div class="pc-where">IIT Madras · Mar 2023</div>
+      <p class="pc-desc">Used Random Forest models to find patterns in e-commerce user behaviour. The interesting challenge was not the modelling — it was figuring out which signals in messy interaction data were actually meaningful versus just noise.</p>
       <div class="pc-pills"><span class="pp">Python</span><span class="pp">Scikit-learn</span><span class="pp">Data Processing</span></div>
+      <div class="pc-links">
+        <a class="pc-link" href="https://github.com/Aish-krish" target="_blank" rel="noopener">↗ GitHub</a>
+      </div>
     </article>
 
     <article class="pc">
@@ -546,14 +667,22 @@ footer strong{color:var(--muted);font-weight:600}
       <div class="pc-where">Feb 2023</div>
       <p class="pc-desc">A web app for tracking carbon emissions at individual and organisational level. A good exercise in building something that had to be simple enough for anyone to use without sacrificing flexibility to be genuinely useful.</p>
       <div class="pc-pills"><span class="pp">Java</span><span class="pp">Servlets</span><span class="pp">HTML/CSS/JS</span><span class="pp">SQL</span><span class="pp">Tomcat</span></div>
+      <div class="pc-links">
+        <a class="pc-link" href="https://github.com/Aish-krish" target="_blank" rel="noopener">↗ GitHub</a>
+      </div>
     </article>
 
     <article class="pc">
-      <div class="pc-top"><span class="pc-type pt-ml">NLP, Research</span></div>
+      <div class="pc-top"><span class="pc-type pt-ml">NLP · Research</span></div>
       <div class="pc-name">Indian Language Summarisation, ILSUM FIRE'22</div>
-      <div class="pc-where">Oct 2022, Published CEUR-WS</div>
+      <div class="pc-where">Oct 2022 · Published CEUR-WS</div>
       <p class="pc-desc">Text summarisation across Hindi, Gujarati, and English using mT5, BERT, and XL-Sum for the FIRE 2022 shared task. Less about winning, more about understanding how multilingual models handle languages with genuinely different structures.</p>
       <div class="pc-pills"><span class="pp">Python</span><span class="pp">PyTorch</span><span class="pp">TensorFlow</span><span class="pp">BERT</span><span class="pp">mT5</span></div>
+      <div class="pc-links">
+        <a class="pc-link" href="https://ceur-ws.org/Vol-3267/" target="_blank" rel="noopener">↗ Paper</a>
+        <span class="pc-link-sep">·</span>
+        <a class="pc-link" href="https://github.com/Aish-krish" target="_blank" rel="noopener">↗ GitHub</a>
+      </div>
     </article>
 
   </div>
@@ -567,10 +696,10 @@ footer strong{color:var(--muted);font-weight:600}
   <h2 class="sh">Tools and technologies</h2>
   <p class="sp">What I reach for, in roughly the order I would reach for it.</p>
   <div class="sk-grid">
-    <div class="sk"><div class="sk-h">☁️ Cloud and DevOps</div><div class="sk-tags"><span class="st">AWS S3</span><span class="st">OpenShift</span><span class="st">Kubernetes</span><span class="st">Docker</span><span class="st">Jenkins</span><span class="st">Harness</span><span class="st">Lightspeed</span><span class="st">RLM</span><span class="st">Unix/Linux</span></div></div>
     <div class="sk"><div class="sk-h">⚙️ Languages</div><div class="sk-tags"><span class="st">Java</span><span class="st">Python</span><span class="st">JavaScript</span><span class="st">SQL</span><span class="st">C/C++</span><span class="st">Bash</span></div></div>
-    <div class="sk"><div class="sk-h">🔧 Frameworks</div><div class="sk-tags"><span class="st">Spring Boot</span><span class="st">Microservices</span><span class="st">REST APIs</span><span class="st">ReactJS</span><span class="st">Node.js</span><span class="st">AngularJS</span></div></div>
+    <div class="sk"><div class="sk-h">🔧 Frameworks & Technologies</div><div class="sk-tags"><span class="st">Spring Boot</span><span class="st">Microservices</span><span class="st">REST APIs</span><span class="st">ReactJS</span><span class="st">Node.js</span><span class="st">AngularJS</span></div></div>
     <div class="sk"><div class="sk-h">🤖 AI and ML</div><div class="sk-tags"><span class="st">GenAI</span><span class="st">LLMs</span><span class="st">Agentic AI</span><span class="st">MCP</span><span class="st">PyTorch</span><span class="st">TensorFlow</span><span class="st">Scikit-learn</span><span class="st">OCR</span></div></div>
+    <div class="sk"><div class="sk-h">☁️ Cloud and DevOps</div><div class="sk-tags"><span class="st">AWS S3</span><span class="st">OpenShift</span><span class="st">Kubernetes</span><span class="st">Docker</span><span class="st">Jenkins</span><span class="st">Harness</span><span class="st">Lightspeed</span><span class="st">RLM</span><span class="st">Unix/Linux</span></div></div>
     <div class="sk"><div class="sk-h">🗄️ Databases</div><div class="sk-tags"><span class="st">MySQL</span><span class="st">PostgreSQL</span><span class="st">MongoDB</span></div></div>
     <div class="sk"><div class="sk-h">📊 Tools</div><div class="sk-tags"><span class="st">Tableau</span><span class="st">Jira</span><span class="st">Git</span><span class="st">Bitbucket</span></div></div>
   </div>
@@ -583,17 +712,19 @@ footer strong{color:var(--muted);font-weight:600}
     <div class="pub">
       <div class="pub-n">01</div>
       <div>
-        <div class="pub-venue">Springer, Circuits Systems and Signal Processing, Apr 2024</div>
+        <div class="pub-venue">Springer · Circuits, Systems and Signal Processing · Apr 2024</div>
         <div class="pub-title">Real-time Tamil Dialect Speech Recognition and Summarization</div>
-        <p class="pub-body">Built a large-scale dataset of Tamil dialect variation, regional, colloquial, and cultural, and used it to fine-tune OpenAI Whisper and NVIDIA NeMo. The goal was making ASR work for how Tamil is actually spoken, not just how it appears in textbooks.</p>
+        <p class="pub-body">Built a large-scale dataset of Tamil dialect variation — regional, colloquial, and cultural — and used it to fine-tune OpenAI Whisper and NVIDIA NeMo. The goal was making ASR work for how Tamil is actually spoken, not just how it appears in textbooks.</p>
+        <a class="pub-link" href="https://link.springer.com/search?query=Tamil+Dialect+Speech+Recognition+Krishnakumar" target="_blank" rel="noopener" aria-label="View on Springer">↗ View on Springer</a>
       </div>
     </div>
     <div class="pub">
       <div class="pub-n">02</div>
       <div>
-        <div class="pub-venue">ILSUM FIRE 2022, CEUR-WS, May 2023</div>
+        <div class="pub-venue">ILSUM FIRE 2022 · CEUR-WS · May 2023</div>
         <div class="pub-title">Summarising Indian Languages using Machine Learning</div>
         <p class="pub-body">Compared mT5-m2m-CrossSum, BERT, XL-Sum, and mT5-small on Hindi, Gujarati, and English summarisation tasks as part of FIRE 2022. A systematic look at how multilingual models transfer across structurally different languages.</p>
+        <a class="pub-link" href="https://ceur-ws.org/Vol-3267/" target="_blank" rel="noopener" aria-label="View on CEUR-WS">↗ View on CEUR-WS</a>
       </div>
     </div>
   </div>
@@ -601,19 +732,19 @@ footer strong{color:var(--muted);font-weight:600}
   <span class="label">Certifications</span>
   <h2 class="sh" style="font-size:1.3rem;margin-bottom:16px">Credentials</h2>
   <div class="cert-wrap">
-    <span class="cert">Building AI, University of Helsinki</span>
-    <span class="cert">Hands-on ML, University of Helsinki</span>
-    <span class="cert">Intro to AI, Accenture</span>
-    <span class="cert">Edge AI, Intel</span>
-    <span class="cert">Intro to Virtual Reality, Lancaster University</span>
-    <span class="cert">Data Mining, NPTEL</span>
-    <span class="cert">Industry 4.0 and IIoT, NPTEL</span>
-    <span class="cert">Discrete Structures, NPTEL</span>
-    <span class="cert">Ethical Hacking, Udemy</span>
-    <span class="cert">IoT Crash Course, Udemy</span>
-    <span class="cert">Sustainable Design, Samsung</span>
-    <span class="cert">Effective Leadership, HP Life</span>
-    <span class="cert">Young Professional, TCSiON</span>
+    <span class="cert">Building AI · University of Helsinki</span>
+    <span class="cert">Hands-on ML · University of Helsinki</span>
+    <span class="cert">Intro to AI · Accenture</span>
+    <span class="cert">Edge AI · Intel</span>
+    <span class="cert">Intro to Virtual Reality · Lancaster University</span>
+    <span class="cert">Data Mining · NPTEL</span>
+    <span class="cert">Industry 4.0 and IIoT · NPTEL</span>
+    <span class="cert">Discrete Structures · NPTEL</span>
+    <span class="cert">Ethical Hacking · Udemy</span>
+    <span class="cert">IoT Crash Course · Udemy</span>
+    <span class="cert">Sustainable Design · Samsung</span>
+    <span class="cert">Effective Leadership · HP Life</span>
+    <span class="cert">Young Professional · TCSiON</span>
   </div>
 
 </div>
@@ -624,7 +755,7 @@ footer strong{color:var(--muted);font-weight:600}
 <div class="inner beyond-inner">
   <span class="label label-light">Beyond work</span>
   <h2 class="sh sh-light">The rest of it</h2>
-  <p class="sp sp-light">Engineering is what I do, not all of who I am. Here is what else is going on.</p>
+  <p class="sp sp-light">Engineering is what I do, not all of who I am.</p>
   <div class="beyond-grid">
     <div class="bc">
       <div class="bc-icon">🏃</div>
@@ -656,6 +787,16 @@ footer strong{color:var(--muted);font-weight:600}
       <div class="bc-title">Modern Family</div>
       <p class="bc-desc">My standard-issue brain-reset show. Reliable, warm, never disappoints. Exactly what you need after a production incident.</p>
     </div>
+    <div class="bc">
+      <div class="bc-icon">❤️</div>
+      <div class="bc-title">Youth Red Cross</div>
+      <p class="bc-desc">Volunteer with the Youth Red Cross — community service that has nothing to do with shipping software, which is occasionally the point.</p>
+    </div>
+    <div class="bc">
+      <div class="bc-icon">👩‍💻</div>
+      <div class="bc-title">Student Leadership</div>
+      <p class="bc-desc">Core committee member of SSN's AI/ML coding club; organised events at Invente (SSN's tech fest) and mentored juniors getting started with programming and research.</p>
+    </div>
   </div>
   <div class="beyond-pull">
     I also spend more time than I should experimenting with new technologies and convincing myself that one more feature will not significantly increase scope. It always does.
@@ -668,14 +809,15 @@ footer strong{color:var(--muted);font-weight:600}
 <div class="inner">
   <div class="contact-box">
     <div class="ci">
-      <div class="ck">Open to Summer 2027 internships</div>
+      <div class="ck">✦ Open to Summer 2027 SWE Internships ✦</div>
       <h2 class="ch">If something here resonated,<br>I would love to hear from you.</h2>
       <p class="cp">Looking for software, backend, cloud, platform, or AI engineering roles where the problems are genuinely hard and the team cares about building things well, not just building things fast.</p>
       <div class="c-links">
-        <a class="cl" href="mailto:aishwaryakrishnakumar123@gmail.com" aria-label="Email Aishwarya">✉️ Email</a>
+        <a class="cl" href="mailto:aishwaryakrishnakumar123@gmail.com" aria-label="Email Aishwarya Krishnakumar">✉️ Email</a>
         <a class="cl" href="https://linkedin.com/in/Aishwarya-Krishnakumar" target="_blank" rel="noopener" aria-label="LinkedIn profile">💼 LinkedIn</a>
         <a class="cl" href="https://github.com/Aish-krish" target="_blank" rel="noopener" aria-label="GitHub profile">GitHub</a>
         <a class="cl" href="tel:+917305771869" aria-label="Phone">+91 73057 71869</a>
+        <button class="cl" onclick="downloadResume()" aria-label="Download resume">View Resume</button>
       </div>
     </div>
   </div>
@@ -683,22 +825,21 @@ footer strong{color:var(--muted);font-weight:600}
 </section>
 
 <footer>
-  <strong>Aishwarya Krishnakumar</strong> &nbsp;·&nbsp; Engineer. Researcher. Runner. Singer. Still figuring out which came first.
+  <strong>Aishwarya Krishnakumar</strong> &nbsp;·&nbsp; Engineer. Researcher. Runner. Singer. Still figuring out which came first. &nbsp;·&nbsp; © 2026
 </footer>
 
 <script>
 // Nav: switch dark/light based on hero visibility
 const hero = document.getElementById('hero');
-const nav = document.getElementById('navbar');
-const io1 = new IntersectionObserver(entries => {
-  nav.className = entries[0].isIntersecting ? 'dark' : 'light';
-}, {threshold: 0.05});
-io1.observe(hero);
+const navbar = document.getElementById('navbar');
+new IntersectionObserver(entries => {
+  navbar.className = entries[0].isIntersecting ? 'dark' : 'light';
+}, {threshold: 0.05}).observe(hero);
 
 // Active nav links
 const sections = document.querySelectorAll('section[id]');
 const links = document.querySelectorAll('.nav-links a');
-const io2 = new IntersectionObserver(entries => {
+new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       links.forEach(l => l.classList.remove('active'));
@@ -706,8 +847,29 @@ const io2 = new IntersectionObserver(entries => {
       if (a) a.classList.add('active');
     }
   });
-}, {threshold: 0.3, rootMargin:'-60px 0px 0px 0px'});
-sections.forEach(s => io2.observe(s));
+}, {threshold: 0.3, rootMargin:'-60px 0px 0px 0px'}).observe(hero);
+sections.forEach(s => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, {threshold: 0.3, rootMargin:'-60px 0px 0px 0px'}).observe(s);
+});
+
+// Resume download
+// Place Aishwarya_Krishnakumar_Resume.pdf in the same folder as index.html
+function downloadResume() {
+  const a = document.createElement('a');
+  a.href = 'assets/Aish_CV_Ms_final.pdf';
+  a.download = 'Aish_CV_Ms_final.pdf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 </script>
 </body>
 </html>
