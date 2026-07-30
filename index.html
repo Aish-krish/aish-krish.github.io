@@ -410,8 +410,7 @@ footer strong{color:var(--ink);font-weight:700}
 
       <!-- Headline -->
       <h1 class="hero-h">
-        Most of my projects start<br>
-        with <span class="hl">"there has to be<br>a better way"</span><br>
+        Most of my projects start with <span class="hl">"there has to be a better way"</span><br>
         <span class="soft">and end up considerably larger.</span>
       </h1>
 
@@ -440,9 +439,9 @@ footer strong{color:var(--ink);font-weight:700}
         To add your photo, replace the div below with:
         <img src="your-photo.jpg" alt="Aishwarya Krishnakumar" class="hero-photo-circle">
       -->
-      <!-- <img src="assets/pic.JPG" alt="Aishwarya Krishnakumar" class="hero-photo-circle"> -->
+      <img src="assets/pic1.png" alt="Aishwarya Krishnakumar" class="hero-photo-circle">
 
-      <div class="hero-photo-circle">AK</div>
+      <!-- <div class="hero-photo-circle">AK</div> -->
     </div>
 
   </div><!-- /hero-layout -->
@@ -864,8 +863,8 @@ sections.forEach(s => {
 // Place Aishwarya_Krishnakumar_Resume.pdf in the same folder as index.html
 function downloadResume() {
   const a = document.createElement('a');
-  a.href = 'Aish_CV_Ms_final.pdf';
-  a.download = 'Aish_CV_Ms_final.pdf';
+  a.href = 'assets/Aish_CV_Ms_final.pdf';
+  a.download = 'assets/Aish_CV_Ms_final.pdf';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
