@@ -47,18 +47,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-right button:hover,.nav-right a:hover{color:var(--cyan)}
 
 /* ---------- hero ---------- */
-#hero{min-height:100vh;position:relative;display:grid;grid-template-columns:1fr 1fr}
-.hero-photo{position:relative;overflow:hidden;background:var(--panel)}
-.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 14%;filter:grayscale(.06) contrast(1.08) saturate(1.05)}
+#hero{min-height:100vh;position:relative;display:flex;align-items:center;padding:130px 5.5% 70px}
+.hero-inner{display:grid;grid-template-columns:1.35fr .9fr;gap:64px;align-items:center;width:100%;max-width:1500px;margin:0 auto}
+.hero-photo{position:relative;overflow:hidden;background:var(--panel);border-radius:6px;
+  aspect-ratio:3/4;max-width:420px;justify-self:end;border:1px solid var(--line)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:grayscale(.06) contrast(1.08) saturate(1.05)}
 .hero-photo::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:linear-gradient(115deg,rgba(57,217,255,.15) 0%,transparent 28%),
-             linear-gradient(245deg,rgba(255,60,172,.13) 0%,transparent 30%),
-             linear-gradient(180deg,transparent 72%,rgba(7,8,13,.82) 100%)}
+  background:linear-gradient(115deg,rgba(57,217,255,.14) 0%,transparent 30%),
+             linear-gradient(245deg,rgba(255,60,172,.12) 0%,transparent 32%),
+             linear-gradient(180deg,transparent 78%,rgba(7,8,13,.55) 100%)}
 .hero-photo::after{content:'';position:absolute;top:0;bottom:0;left:0;width:2px;z-index:2;pointer-events:none;
   background:linear-gradient(180deg,var(--cyan),var(--magenta))}
-#pixel-cat-hero{position:absolute;z-index:3;top:6%;right:6%;width:52px;height:39px;pointer-events:none}
+#pixel-cat-hero{position:absolute;z-index:3;top:5%;right:5%;width:44px;height:33px;pointer-events:none}
 #pixel-cat-hero svg{width:100%;height:100%;image-rendering:pixelated;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
-.hero-left{display:flex;flex-direction:column;justify-content:center;padding:110px 6% 60px 5.5%;position:relative;z-index:2}
+.hero-left{display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
 .hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--dim);margin-bottom:28px}
 .hero-eyebrow span{color:var(--cyan)}
 h1.hero-name{font-size:clamp(2.6rem,6.4vw,5.2rem);font-weight:700;letter-spacing:-2px;line-height:.94;margin-bottom:36px}
@@ -71,15 +73,14 @@ h1.hero-name{font-size:clamp(2.6rem,6.4vw,5.2rem);font-weight:700;letter-spacing
 .hero-links a,.hero-links button{font-family:var(--mono);font-size:12px;letter-spacing:.4px;color:var(--white);
   background:none;border:none;border-bottom:1px solid var(--faint);padding-bottom:4px;cursor:pointer;transition:border-color .2s,color .2s}
 .hero-links a:hover,.hero-links button:hover{color:var(--cyan);border-color:var(--cyan)}
-.hero-vert{position:absolute;right:5%;bottom:40px;z-index:2;writing-mode:vertical-rl;font-family:var(--mono);
-  font-size:10px;letter-spacing:2px;color:var(--dim)}
+.hero-vert{margin-top:44px;font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--dim)}
 .hero-vert b{color:var(--magenta)}
 @media(max-width:900px){
-  #hero{grid-template-columns:1fr;grid-template-rows:56vh auto}
-  .hero-photo{order:-1}
-  .hero-left{padding:44px 6% 60px}
-  .hero-vert{display:none}
-  #pixel-cat-hero{top:8%;right:8%}
+  #hero{padding:110px 6% 60px;min-height:0}
+  .hero-inner{grid-template-columns:1fr;gap:44px}
+  .hero-photo{max-width:280px;justify-self:start;order:2}
+  .hero-left{order:1}
+  #pixel-cat-hero{top:6%;right:6%}
 }
 
 /* ---------- marquee ---------- */
@@ -293,33 +294,35 @@ footer{padding:30px 5%;border-top:1px solid var(--line);display:flex;justify-con
 
 <!-- HERO -->
 <section id="hero" aria-label="Introduction">
-  <div class="hero-left">
-    <div class="hero-eyebrow">SOFTWARE ENGINEER <span>/</span> CHENNAI → CHAMPAIGN <span>/</span> 2026</div>
-    <h1 class="hero-name">AISHWARYA<br>KRISHNAKUMAR</h1>
-    <p class="hero-statement">Most of my projects start with <span class="mark">"there has to be a better way"</span> and end up <span class="over">considerably larger.</span></p>
-    <div class="hero-links">
-      <a href="#projects-intro">view work</a>
-      <button onclick="downloadResume()">download resume</button>
-      <a href="#contact">get in touch</a>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">SOFTWARE ENGINEER <span>/</span> CHENNAI → CHAMPAIGN <span>/</span> 2026</div>
+      <h1 class="hero-name">AISHWARYA<br>KRISHNAKUMAR</h1>
+      <p class="hero-statement">Most of my projects start with <span class="mark">"there has to be a better way"</span> and end up <span class="over">considerably larger.</span></p>
+      <div class="hero-links">
+        <a href="#projects-intro">view work</a>
+        <button onclick="downloadResume()">download resume</button>
+        <a href="#contact">get in touch</a>
+      </div>
+      <div class="hero-vert">SUMMER 2027 <b>/</b> SWE INTERNSHIPS</div>
+    </div>
+    <div class="hero-photo">
+      <img src="assets/aishwarya-photo.jpg" alt="Aishwarya Krishnakumar"
+        onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#151824,#1a1420)'">
+      <div id="pixel-cat-hero" aria-hidden="true">
+        <svg viewBox="0 0 16 12" xmlns="http://www.w3.org/2000/svg">
+          <g fill="#f4f4f5">
+            <rect x="2" y="3" width="8" height="5"/><rect x="1" y="5" width="1" height="3"/>
+            <rect x="10" y="2" width="1" height="2"/><rect x="0" y="1" width="2" height="2"/>
+            <rect x="9" y="1" width="2" height="2"/><rect x="3" y="8" width="2" height="2"/>
+            <rect x="7" y="8" width="2" height="2"/>
+          </g>
+          <g class="cat-tail" fill="#f4f4f5"><rect x="10" y="6" width="3" height="1"/><rect x="13" y="5" width="1" height="1" fill="#ff3cac"/></g>
+          <g class="cat-blink" fill="#39d9ff"><rect x="3" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/></g>
+        </svg>
+      </div>
     </div>
   </div>
-  <div class="hero-photo">
-    <img src="assets/pic1.png" alt="Aishwarya Krishnakumar"
-      onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#151824,#1a1420)'">
-    <div id="pixel-cat-hero" aria-hidden="true">
-      <svg viewBox="0 0 16 12" xmlns="http://www.w3.org/2000/svg">
-        <g fill="#f4f4f5">
-          <rect x="2" y="3" width="8" height="5"/><rect x="1" y="5" width="1" height="3"/>
-          <rect x="10" y="2" width="1" height="2"/><rect x="0" y="1" width="2" height="2"/>
-          <rect x="9" y="1" width="2" height="2"/><rect x="3" y="8" width="2" height="2"/>
-          <rect x="7" y="8" width="2" height="2"/>
-        </g>
-        <g class="cat-tail" fill="#f4f4f5"><rect x="10" y="6" width="3" height="1"/><rect x="13" y="5" width="1" height="1" fill="#ff3cac"/></g>
-        <g class="cat-blink" fill="#39d9ff"><rect x="3" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/></g>
-      </svg>
-    </div>
-  </div>
-  <div class="hero-vert">SUMMER 2027 <b>/</b> SWE INTERNSHIPS</div>
 </section>
 
 <!-- MARQUEE -->
@@ -726,7 +729,7 @@ footer{padding:30px 5%;border-top:1px solid var(--line);display:flex;justify-con
 /* resume download */
 function downloadResume(){
   var a=document.createElement('a');
-  a.href='assets/Aish_CV_Ms_final.pdf';a.download='assets/Aish_CV_Ms_final.pdf';
+  a.href='assets/Aishwarya_Krishnakumar_Resume.pdf';a.download='Aishwarya_Krishnakumar_Resume.pdf';
   document.body.appendChild(a);a.click();document.body.removeChild(a);
 }
 
